@@ -1,3 +1,4 @@
+import { MOCK_RECIPIENT_USER, MOCK_SENDER_USER } from "../../config/constants";
 import Chat from "./components/Chat/Chat";
 import ContactsList from "./components/ContactsList/ContactsList";
 
@@ -47,7 +48,7 @@ export type ChatMessage = {
 function stringToChatMessage() {
   return DEFAULT_TEST_MESSAGES.map((message, index) => ({
     id: `${index}`,
-    user: 'Caio',
+    user: index % 2 === 0 ? MOCK_SENDER_USER : MOCK_RECIPIENT_USER,
     text: message,
     picture: '',
     lastTime: ''

@@ -1,6 +1,9 @@
 import { render } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import Chat, { ChatMessage } from "./Chat";
+import {
+  MOCK_RECIPIENT_USER,
+} from "../../../../config/constants";
 
 const DEFAULT_TEST_MESSAGES: ChatMessage[] = [
   {
@@ -8,21 +11,21 @@ const DEFAULT_TEST_MESSAGES: ChatMessage[] = [
     lastTime: "",
     picture: "",
     text: "FirstMessage",
-    user: "TEST_RECIPIENT",
+    user: MOCK_RECIPIENT_USER,
   },
   {
     id: "1",
     lastTime: "",
     picture: "",
     text: "SecondMessage",
-    user: "TEST_RECIPIENT",
+    user: MOCK_RECIPIENT_USER,
   },
   {
     id: "2",
     lastTime: "",
     picture: "",
     text: "ThirdMessage",
-    user: "TEST_RECIPIENT",
+    user: MOCK_RECIPIENT_USER,
   },
 ];
 
@@ -34,23 +37,29 @@ describe("<Chat /> Component", () => {
       expect(getByText(message.text)).toBeInTheDocument();
     });
   });
-  it("Should render messages when input is typed and sended", () => {
+  it("Should render messages when input is typed and sended", async () => {
     const userInputText = "TEST INPUT";
     const inputPlaceholder = "Digite sua mensagem";
     const { getByText, getByPlaceholderText } = render(
       <Chat messages={DEFAULT_TEST_MESSAGES} />
     );
-    user.type(getByPlaceholderText(inputPlaceholder), userInputText);
+    await user.type(getByPlaceholderText(inputPlaceholder), userInputText);
+    await user.keyboard("{Enter}");
     const message = getByText(userInputText);
     expect(message).toBeInTheDocument();
   });
-  it("Should render messages in the correct place depending on the message owner", () => {
+  it("Should render messages in the correct place depending on the message owner", async () => {
     const senderText = "Sender TEST INPUT";
-    const { getByText } = render(<Chat messages={DEFAULT_TEST_MESSAGES} />);
+    const inputPlaceholder = "Digite sua mensagem";
+    const { getByText, getByPlaceholderText } = render(
+      <Chat messages={DEFAULT_TEST_MESSAGES} />
+    );
+    await user.type(getByPlaceholderText(inputPlaceholder), senderText);
+    await user.keyboard("{Enter}");
     const senderMessage = getByText(senderText);
     DEFAULT_TEST_MESSAGES.forEach((message) => {
-      expect(getByText(message.text)).toHaveClass("flex-row");
+      expect(getByText(message.text).parentElement).toHaveClass("items-start");
     });
-    expect(senderMessage).toHaveClass("flex-row-reverse");
+    expect(senderMessage.parentElement).toHaveClass("items-end");
   });
 });

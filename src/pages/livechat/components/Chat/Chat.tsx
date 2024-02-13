@@ -1,5 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import Message from "./Message";
+import { KEY_CODES, MOCK_SENDER_USER } from "../../../../config/constants";
+import { v4 as uuid } from "uuid";
 
 export type ChatMessage = {
   id: string;
@@ -15,6 +17,7 @@ export type ChatProps = {
 
 export default function Chat({ messages }: ChatProps) {
   const [message, setMessage] = useState<ChatMessage[]>(messages);
+  const [inputMessage, setInputMessage] = useState<string>();
 
   // function randomMessage(): ChatMessage {
   //   return messages[(Math.random() * messages.length) | 0];
@@ -38,8 +41,8 @@ export default function Chat({ messages }: ChatProps) {
             date=""
             picture=""
             text={message.text}
-            user="USER"
-            type={index % 2 === 0 ? "sender" : "recipient"}
+            user={message.user}
+            type={message.user === MOCK_SENDER_USER ? "sender" : "recipient"}
           />
         ))}
         <div className="border border-transparent"></div>
@@ -47,6 +50,27 @@ export default function Chat({ messages }: ChatProps) {
       <textarea
         className="h-48 border border-red-500"
         placeholder="Digite sua mensagem"
+        defaultValue={inputMessage}
+        value={inputMessage}
+        onChange={(e) => setInputMessage(e.target.value)}
+        onKeyDown={(e) => {
+          if (KEY_CODES.ENTER.includes(e.key)) {
+            e.preventDefault();
+            if (inputMessage) {
+              setInputMessage("");
+              setMessage([
+                ...message,
+                {
+                  id: uuid(),
+                  lastTime: "",
+                  picture: "",
+                  user: MOCK_SENDER_USER,
+                  text: inputMessage,
+                },
+              ]);
+            }
+          }
+        }}
       ></textarea>
     </div>
   );
