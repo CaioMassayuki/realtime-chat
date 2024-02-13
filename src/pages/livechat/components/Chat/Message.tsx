@@ -11,7 +11,7 @@ export type MessageProps = {
 function Message({ text, user, picture, date, type }: MessageProps) {
   return (
     <div
-      className={clsx("my-2 flex", {
+      className={clsx("my-2 flex [overflow-anchor:none]", {
         "flex-row-reverse": type === "sender",
         "flex-row": type === "recipient",
       })}

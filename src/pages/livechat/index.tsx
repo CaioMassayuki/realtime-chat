@@ -1,5 +1,5 @@
-import Chat from "../../components/Chat/Chat";
-import ContactsList from "../../components/ContactsList/ContactsList";
+import Chat from "./components/Chat/Chat";
+import ContactsList from "./components/ContactsList/ContactsList";
 
 export default function Livechat() {
   return (
