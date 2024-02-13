@@ -23,7 +23,7 @@ describe("<Register /> Component", () => {
     expect(registerButton).toBeDisabled()
   });
   it("Should give a warning when the password dont match", async () => {
-    const { getByLabelText, getByText } = renderRouterWrapper(<Register />);
+    const { getByLabelText } = renderRouterWrapper(<Register />);
     const passInput = getByLabelText("Senha");
     const confirmPassInput = getByLabelText("Confirme sua senha");
     await user.type(passInput, "PASSWORD");
