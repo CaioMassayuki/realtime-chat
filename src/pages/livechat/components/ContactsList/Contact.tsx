@@ -1,10 +1,8 @@
-export type Contact = {
-    user: string,
-    lastMessage: string,
-    picture: string,
-}
+import { ContactType } from "./ContactsList";
 
-function Contact({user, lastMessage, picture}: Contact) {
+export type ContactProps = Omit<ContactType, 'id'>
+
+function Contact({user, lastMessage, picture, lastMessageDate}: ContactProps) {
   return (
     <button className="flex">
       <img className="size-8 rounded-full bg-black" src={picture} />

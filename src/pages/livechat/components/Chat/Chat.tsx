@@ -18,6 +18,7 @@ export type ChatProps = {
 export default function Chat({ messages }: ChatProps) {
   const [message, setMessage] = useState<ChatMessage[]>(messages);
   const [inputMessage, setInputMessage] = useState<string>();
+  const chatAnchor = useRef<HTMLDivElement>(null)
 
   // function randomMessage(): ChatMessage {
   //   return messages[(Math.random() * messages.length) | 0];
@@ -32,6 +33,12 @@ export default function Chat({ messages }: ChatProps) {
   //   };
   // }, []);
 
+  useEffect(() => {
+    if(chatAnchor.current){
+      chatAnchor.current.scrollIntoView(true)
+    }
+  }, [])
+
   return (
     <div className="w-full h-[calc(100vh-100px)] flex flex-col justify-between p-4 border border-purple-500">
       <div className="w-full h-full p-4 flex flex-col overflow-y-scroll border border-black">
@@ -45,7 +52,7 @@ export default function Chat({ messages }: ChatProps) {
             type={message.user === MOCK_SENDER_USER ? "sender" : "recipient"}
           />
         ))}
-        <div className="border border-transparent"></div>
+        <div ref={chatAnchor} className="border border-transparent"></div>
       </div>
       <textarea
         className="h-48 border border-red-500"

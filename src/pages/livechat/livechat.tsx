@@ -1,6 +1,7 @@
-import { MOCK_RECIPIENT_USER, MOCK_SENDER_USER } from "../../config/constants";
+import { MOCK_RECIPIENT_USER, MOCK_SENDER_USER, MOCK_USERS } from "../../config/constants";
 import Chat from "./components/Chat/Chat";
 import ContactsList from "./components/ContactsList/ContactsList";
+import { v4 as uuid } from "uuid";
 
 const DEFAULT_TEST_MESSAGES = [
   "I wondered why the baseball was getting bigger. Then it hit me.",
@@ -37,6 +38,30 @@ const DEFAULT_TEST_MESSAGES = [
   "A calendar’s days are numbered.",
 ];
 
+export const MOCK_CONTACTS = [
+  {
+    id: uuid(),
+    user: MOCK_USERS[0],
+    picture: "",
+    lastMessage: "Last Message 1",
+    lastMessageDate: "",
+  },
+  {
+    id: uuid(),
+    user: MOCK_USERS[1],
+    picture: "",
+    lastMessage: "Last Message 2",
+    lastMessageDate: "",
+  },
+  {
+    id: uuid(),
+    user: MOCK_USERS[2],
+    picture: "",
+    lastMessage: "Last Message 3",
+    lastMessageDate: "",
+  },
+];
+
 export type ChatMessage = {
   id: string;
   user: string;
@@ -50,9 +75,9 @@ function stringToChatMessage() {
     id: `${index}`,
     user: index % 2 === 0 ? MOCK_SENDER_USER : MOCK_RECIPIENT_USER,
     text: message,
-    picture: '',
-    lastTime: ''
-  }))
+    picture: "",
+    lastTime: "",
+  }));
 }
 
 export default function Livechat() {
@@ -69,10 +94,10 @@ export default function Livechat() {
         </aside> */}
         <main className="flex w-full ">
           <section className="w-2/12 p-4 border border-green-500">
-            <ContactsList />
+            <ContactsList contacts={MOCK_CONTACTS} />
           </section>
           <section className="w-10/12 flex border border-blue-500">
-            <Chat messages={stringToChatMessage()}/>
+            <Chat messages={stringToChatMessage()} />
             {/* <div className="w-72 p-4 border border-black">SIDE INFO</div> */}
           </section>
         </main>
