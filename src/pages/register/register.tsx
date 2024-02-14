@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import Button from "../../components/Button";
 import Input from "../../components/Input";
 import { useReducer } from "react";
@@ -68,13 +68,15 @@ const registerFormReducer = (
 export default function Register() {
   const [state, dispatch] = useReducer(registerFormReducer, initialState);
   const addNewUser = useLiveChatStore((storeState) => storeState.users.addUser);
+  const navigate = useNavigate()
 
-  const formFulfilled =
-    state.name && state.pass && state.confirm.text && !state.confirm.hasError;
+  const formFulfilled = Boolean(
+    state.name && state.pass && state.confirm.text && !state.confirm.hasError
+  );
 
   const handleRegister = () => {
     addNewUser({ name: state.name, password: state.pass });
-    redirect("/");
+    navigate('/')
   };
 
   return (

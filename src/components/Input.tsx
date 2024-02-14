@@ -9,7 +9,7 @@ interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
 export default function Input({ label, error, ...props }: InputProps) {
   return (
     <label
-      className={clsx("flex flex-col w-full m-1 text-sm", {
+      className={clsx("flex flex-col w-full text-sm", {
         "text-red-500": error,
       })}
     >

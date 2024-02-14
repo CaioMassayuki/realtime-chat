@@ -2,7 +2,7 @@ import userEvent from "@testing-library/user-event";
 import Register from "./register";
 import { renderRouterWrapper } from "../../utils/renderRouterWrapper";
 
-describe("<Register /> Component", () => {
+describe.only("<Register /> Component", () => {
   const user = userEvent.setup();
   it("Should enable Cadastrar button if the user input all the form inputs", async () => {
     const { getByLabelText, getByText } = renderRouterWrapper(<Register />);
@@ -16,14 +16,14 @@ describe("<Register /> Component", () => {
     expect(registerButton).not.toBeDisabled()
   });
   it("Should disable Cadastrar button if the user didnt input all the form inputs", async () => {
-    const { getByLabelText, getByText } = renderRouterWrapper(<Register />);
+    const { getByLabelText, getByText } = renderRouterWrapper(<Register />, '/register');
     const nameInput = getByLabelText("Nome");
     const registerButton = getByText('Cadastrar')
     await user.type(nameInput, "TEST");
     expect(registerButton).toBeDisabled()
   });
   it("Should give a warning when the password dont match", async () => {
-    const { getByLabelText } = renderRouterWrapper(<Register />);
+    const { getByLabelText } = renderRouterWrapper(<Register />, '/register');
     const passInput = getByLabelText("Senha");
     const confirmPassInput = getByLabelText("Confirme sua senha");
     await user.type(passInput, "PASSWORD");
@@ -32,7 +32,7 @@ describe("<Register /> Component", () => {
     expect(confirmPassInput.parentElement).toHaveClass('text-red-500')
   });
   it("Should register new user and and return to login page", async () => {
-    const { getByLabelText, getByText, history } = renderRouterWrapper(<Register />);
+    const { getByLabelText, getByText, history } = renderRouterWrapper(<Register />, '/register');
     const nameInput = getByLabelText("Nome");
     const passInput = getByLabelText("Senha");
     const confirmPassInput = getByLabelText("Confirme sua senha");
