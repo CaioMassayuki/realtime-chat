@@ -46,14 +46,17 @@ export default function Login() {
   const checkCredential = useLiveChatStore(
     (state) => state.users.checkCredentials
   );
+  const startSession = useLiveChatStore(
+    (state) => state.liveChatSesssion.startSession
+  );
   const navigate = useNavigate();
 
   const handleEnterSubmit = () => {
     const user = checkCredential(loginForm.name, loginForm.pass);
     if (user) {
+      startSession(user);
       navigate("/chat");
     } else {
-      console.log(user);
       loginFormDispatch({
         type: LoginFormActionOptions.WRONG_ACCESS,
         payload: true,

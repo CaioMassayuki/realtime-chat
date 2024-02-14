@@ -15,7 +15,7 @@ const createUsersSlice: StateSlice<UsersSlice> = (set, get) => ({
     set((state) => {
       state.users.users = [
         ...state.users.users,
-        { ...newUser, id: uuid(), picture: "", contacts: [] },
+        { ...newUser, id: uuid(), picture: "", contacts: [], chats: [] },
       ];
     }),
   getUser: (id) => get().users.users.find((user) => user.id === id),

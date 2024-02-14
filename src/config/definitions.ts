@@ -4,6 +4,7 @@ export type User = {
   password: string;
   picture: string;
   contacts: Omit<User, "password">[];
+  chats: Pick<ChatHistory, "id">[];
 };
 
 export type ChatMessage = {
@@ -25,5 +26,4 @@ export type ChatHistory = {
 
 export type LiveChatSession = {
   user: Omit<User, "password">;
-  chats: Pick<ChatHistory, "id">[];
 };
