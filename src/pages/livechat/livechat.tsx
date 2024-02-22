@@ -1,4 +1,10 @@
-import { MOCK_RECIPIENT_USER, MOCK_SENDER_USER, MOCK_USERS } from "../../config/constants";
+import {
+  MOCK_RECIPIENT_USER,
+  MOCK_SENDER_USER,
+  MOCK_USERS,
+} from "../../config/constants";
+import { MOCK_SESSION } from "../../store/slices/livechatSessionSlice";
+import useLiveChatStore from "../../store/store";
 import Chat from "./components/Chat/Chat";
 import ContactsList from "./components/ContactsList/ContactsList";
 import { v4 as uuid } from "uuid";
@@ -81,6 +87,10 @@ function stringToChatMessage() {
 }
 
 export default function Livechat() {
+  const liveChatState = useLiveChatStore.getState()
+  const chats = liveChatState.chatHistory.retrieveChats(MOCK_SESSION.user.chats)
+  console.log(chats)
+
   return (
     <div className="h-screen flex flex-col">
       <header className="text-white flex items-center p-2 bg-black border border-orange-400 w-full h-20">
@@ -92,9 +102,9 @@ export default function Livechat() {
             <h3>SIDEBAR</h3>
           </section>
         </aside> */}
-        <main className="flex w-full ">
+        <main className="flex w-full">
           <section className="w-2/12 p-4 border border-green-500">
-            <ContactsList contacts={MOCK_CONTACTS} />
+            <ContactsList chats={chats} />
           </section>
           <section className="w-10/12 flex border border-blue-500">
             <Chat messages={stringToChatMessage()} />

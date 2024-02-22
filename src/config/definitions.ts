@@ -3,12 +3,12 @@ export type User = {
   name: string;
   password: string;
   picture: string;
-  contacts: Omit<User, "password">[];
-  chats: Pick<ChatHistory, "id">[];
+  contacts: Omit<User, "password" | "contacts" | "chats">[];
+  chats: string[];
 };
 
 export type ChatMessage = {
-  userId: Pick<User, "id">;
+  userId: string;
   message: string;
   messageTime: string;
 };
@@ -16,13 +16,15 @@ export type ChatMessage = {
 export type ChatHistory = {
   id: string;
   group: boolean;
-  title?: string;
-  picture?: string;
-  users: Pick<User, "id">[];
+  title: string;
+  picture: string;
+  users: Pick<User, "id" | 'name' | 'picture'>[];
   messages: ChatMessage[];
-  lastMessage: ChatMessage;
+  lastMessage: string;
   lastMessageTime: string;
 };
+
+export type ChatResume = Omit<ChatHistory, "messages">;
 
 export type LiveChatSession = {
   user: Omit<User, "password">;
